@@ -1,0 +1,277 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>水分・記録 かんたん入力</title>
+<style>
+  :root{
+    --ink:#16263c; --slate:#1f3a5f; --bg:#eef2f7; --card:#fff; --line:#cfd9e6;
+    --teal:#0f766e; --teal-d:#0b5b54; --blue:#2563b4; --muted:#5e6c80;
+    --ok:#157f4a; --okbg:#e3f3ea; --okline:#8fcca8;
+    --warn:#b42318; --warnbg:#fdecea;
+    --shadow:0 2px 6px rgba(20,35,59,.10),0 8px 24px rgba(20,35,59,.07);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+    font-size:19px;line-height:1.5;-webkit-font-smoothing:antialiased;touch-action:manipulation}
+  .app{max-width:820px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+  header{background:linear-gradient(180deg,var(--slate),#193150);color:#fff;
+    padding:16px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:10;border-bottom:4px solid var(--teal)}
+  header .ttl{font-weight:800;font-size:20px;letter-spacing:.03em}
+  header .date{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:15px;color:#cdd9ec}
+  header input[type=date]{font:inherit;font-size:17px;border:0;border-radius:10px;padding:8px 10px}
+  .back{background:#fff;color:var(--slate);border:0;border-radius:12px;padding:10px 16px;font:inherit;font-weight:800;font-size:17px;cursor:pointer}
+  main{flex:1;padding:18px 16px 40px}
+  .lead{font-size:21px;font-weight:800;margin:4px 4px 16px}
+  .lead .who{color:var(--teal)}
+
+  /* 利用者カード */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+  .person{background:var(--card);border:2px solid var(--line);border-radius:18px;
+    padding:26px 10px;font-size:24px;font-weight:800;color:var(--ink);cursor:pointer;
+    box-shadow:var(--shadow);transition:.08s;min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center}
+  .person:active{transform:scale(.97);border-color:var(--teal);background:#f1faf8}
+
+  /* 入力カード */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 18px 20px;box-shadow:var(--shadow);margin-bottom:16px}
+  .card>.lab{font-size:18px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+  .card>.lab .tag{font-size:13px;font-weight:700;color:var(--muted)}
+
+  /* 水分 */
+  .water-now{display:flex;align-items:baseline;gap:8px;justify-content:center;margin:2px 0 6px}
+  .water-now b{font-size:54px;font-weight:900;color:var(--blue);font-variant-numeric:tabular-nums}
+  .water-now span{font-size:20px;font-weight:800;color:var(--muted)}
+  .track{height:16px;border-radius:10px;background:#e7edf5;overflow:hidden;border:1px solid var(--line);margin:6px 0 4px}
+  .track>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3aa0d8,#0f766e);transition:.25s}
+  .track-lab{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:14px}
+  .addrow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+  .add{border:2px solid var(--okline);background:var(--okbg);color:var(--ok);border-radius:14px;
+    padding:16px 4px;font:inherit;font-weight:900;font-size:19px;cursor:pointer}
+  .add:active{transform:scale(.96)}
+  .add.minus{border-color:#e3b7b3;background:#fbeeed;color:var(--warn)}
+  .waterbox{display:flex;align-items:center;gap:10px;justify-content:center}
+  .waterbox input{width:160px;font:inherit;font-size:28px;font-weight:800;text-align:center;
+    border:2px solid var(--line);border-radius:14px;padding:10px}
+  .waterbox .unit{font-size:20px;font-weight:800;color:var(--muted)}
+
+  /* ステッパー */
+  .stepper{display:flex;align-items:center;justify-content:center;gap:18px}
+  .stepper button{width:68px;height:68px;border-radius:50%;border:2px solid var(--line);background:#fff;
+    font-size:34px;font-weight:900;color:var(--slate);cursor:pointer;line-height:1}
+  .stepper button:active{transform:scale(.94);background:#f1f5fa}
+  .stepper .val{font-size:46px;font-weight:900;min-width:90px;text-align:center;font-variant-numeric:tabular-nums}
+  .stepper .val small{font-size:18px;color:var(--muted);font-weight:800}
+
+  /* トグル群 */
+  .toggles{display:flex;gap:12px;flex-wrap:wrap}
+  .tg{flex:1 1 0;min-width:96px;border:2px solid var(--line);background:#fff;border-radius:14px;
+    padding:18px 6px;font:inherit;font-size:20px;font-weight:800;color:var(--muted);cursor:pointer;text-align:center}
+  .tg:active{transform:scale(.97)}
+  .tg[aria-pressed=true]{background:var(--okbg);border-color:var(--okline);color:var(--ok)}
+  .tg[aria-pressed=true]::after{content:" ✓"}
+  .chips{display:flex;gap:10px;flex-wrap:wrap}
+  .chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:12px 20px;font:inherit;font-size:18px;font-weight:800;color:var(--muted);cursor:pointer}
+  .chip[aria-pressed=true]{background:#e9f0fb;border-color:#9cbbe6;color:var(--blue)}
+  .memo{width:100%;font:inherit;font-size:18px;border:2px solid var(--line);border-radius:14px;padding:12px;min-height:64px}
+
+  .save{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(238,242,247,0),var(--bg) 26%);padding:14px 0 18px}
+  .save button{width:100%;background:var(--teal);color:#fff;border:0;border-radius:18px;
+    padding:22px;font:inherit;font-size:24px;font-weight:900;cursor:pointer;box-shadow:var(--shadow)}
+  .save button:active{background:var(--teal-d);transform:translateY(1px)}
+
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(24px);opacity:0;
+    background:var(--ok);color:#fff;padding:18px 30px;border-radius:16px;font-weight:900;font-size:22px;box-shadow:var(--shadow);transition:.25s;z-index:50;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .manage{margin-top:10px;text-align:center}
+  .manage button{background:none;border:0;color:var(--muted);font:inherit;font-size:15px;text-decoration:underline;cursor:pointer}
+  .hidden{display:none!important}
+</style>
+
+<div class="app">
+  <header>
+    <button class="back hidden" id="back">← もどる</button>
+    <span class="ttl" id="htitle">利用者をえらぶ</span>
+    <span class="date">日づけ <input type="date" id="date"></span>
+  </header>
+  <main>
+    <!-- 画面1: 利用者選択 -->
+    <section id="screen-list">
+      <div class="lead">きょうの記録をする<span class="who"> 利用者</span>をタップ</div>
+      <div class="grid" id="people"></div>
+      <div class="manage"><button id="edit-people">＋ 利用者をふやす / へらす</button></div>
+    </section>
+
+    <!-- 画面2: 入力 -->
+    <section id="screen-input" class="hidden">
+      <div class="lead"><span class="who" id="who"></span> さんの記録</div>
+
+      <div class="card">
+        <div class="lab">💧 水分（みずぶん）<span class="tag">きょうの合計</span></div>
+        <div class="water-now"><b id="w-now">0</b><span>mL</span></div>
+        <div class="track"><i id="w-bar"></i></div>
+        <div class="track-lab"><span>0</span><span id="w-msg">目標 1000〜1500mL</span><span>1500</span></div>
+        <div class="addrow">
+          <button class="add" data-add="100">＋100</button>
+          <button class="add" data-add="150">＋150<br><small>コップ</small></button>
+          <button class="add" data-add="200">＋200</button>
+          <button class="add minus" data-add="-100">－100</button>
+        </div>
+        <div class="waterbox">
+          <span class="unit">直接入力</span>
+          <input type="number" id="w-input" inputmode="numeric" min="0" step="50" placeholder="0">
+          <span class="unit">mL</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="lab">🚻 排尿（はいにょう）<span class="tag">かいすう</span></div>
+        <div class="stepper">
+          <button data-step="urine" data-d="-1">−</button>
+          <div class="val"><span id="urine">0</span><small> 回</small></div>
+          <button data-step="urine" data-d="1">＋</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="lab">💩 排便（はいべん）<span class="tag">かいすう・かたち</span></div>
+        <div class="stepper" style="margin-bottom:14px">
+          <button data-step="stool" data-d="-1">−</button>
+          <div class="val"><span id="stool">0</span><small> 回</small></div>
+          <button data-step="stool" data-d="1">＋</button>
+        </div>
+        <div class="chips" id="stool-type" style="justify-content:center">
+          <span class="chip" data-st="普通" aria-pressed="false">ふつう</span>
+          <span class="chip" data-st="軟便" aria-pressed="false">やわらかい</span>
+          <span class="chip" data-st="水様" aria-pressed="false">みずっぽい</span>
+          <span class="chip" data-st="硬便" aria-pressed="false">かたい</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="lab">💊 服薬（ふくやく）<span class="tag">のんだらタップ</span></div>
+        <div class="toggles">
+          <button class="tg" data-med="m" aria-pressed="false">朝</button>
+          <button class="tg" data-med="n" aria-pressed="false">昼</button>
+          <button class="tg" data-med="e" aria-pressed="false">夕</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="lab">🪥 口腔ケア・清拭<span class="tag">やったらタップ</span></div>
+        <div class="toggles">
+          <button class="tg" id="oral" aria-pressed="false">口腔ケア</button>
+          <button class="tg" id="wipe" aria-pressed="false">清拭</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="lab">📝 ひとこと<span class="tag">きづいたこと（任意）</span></div>
+        <textarea class="memo" id="memo" placeholder="体調や様子など（書かなくてOK）"></textarea>
+      </div>
+
+      <div class="save"><button id="save">この内容をほぞんする</button></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast">ほぞんしました</div>
+
+<script>
+/* 保存層: チャット内=永続storage / ローカル=localStorage 自動切替（本番ではここをGoogle送信に差し替え） */
+const hasWS=(typeof window!=='undefined'&&window.storage&&window.storage.get);
+const store={
+  async get(k){try{if(hasWS){const r=await window.storage.get(k,false);return r?r.value:null;}return localStorage.getItem(k);}catch(e){return null;}},
+  async set(k,v){try{if(hasWS){await window.storage.set(k,v,false);}else{localStorage.setItem(k,v);}}catch(e){}},
+};
+const RKEY='easy_people';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+
+let people=[], cur=null;
+const state={water:0,urine:0,stool:0,stoolType:'',med:{m:false,n:false,e:false},oral:false,wipe:false,memo:''};
+
+function todayStr(){const d=new Date();return d.toISOString().slice(0,10);}
+
+async function init(){
+  $('#date').value=todayStr();
+  const pj=await store.get(RKEY);
+  people=pj?JSON.parse(pj):['KY様','MU様','NAK様','S様','T様','TK様'];
+  if(!pj)await store.set(RKEY,JSON.stringify(people));
+  renderPeople(); bind();
+}
+function renderPeople(){
+  $('#people').innerHTML=people.map((p,i)=>`<button class="person" data-i="${i}">${esc(p)}</button>`).join('');
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+function openInput(name){
+  cur=name;
+  Object.assign(state,{water:0,urine:0,stool:0,stoolType:'',med:{m:false,n:false,e:false},oral:false,wipe:false,memo:''});
+  $('#who').textContent=name;
+  $('#htitle').textContent='記録を入力';
+  $('#back').classList.remove('hidden');
+  $('#screen-list').classList.add('hidden');
+  $('#screen-input').classList.remove('hidden');
+  syncUI(); window.scrollTo(0,0);
+}
+function goList(){
+  $('#htitle').textContent='利用者をえらぶ';
+  $('#back').classList.add('hidden');
+  $('#screen-input').classList.add('hidden');
+  $('#screen-list').classList.remove('hidden');
+}
+function syncUI(){
+  $('#w-now').textContent=state.water;
+  $('#w-input').value=state.water||'';
+  const pct=Math.max(0,Math.min(100,state.water/1500*100));
+  $('#w-bar').style.width=pct+'%';
+  $('#w-msg').textContent= state.water>=1000? 'よい調子です' : (state.water>0? 'あと少し（目標1000〜1500）':'目標 1000〜1500mL');
+  $('#urine').textContent=state.urine;
+  $('#stool').textContent=state.stool;
+  $$('#stool-type .chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.st===state.stoolType));
+  $$('[data-med]').forEach(b=>b.setAttribute('aria-pressed',state.med[b.dataset.med]));
+  $('#oral').setAttribute('aria-pressed',state.oral);
+  $('#wipe').setAttribute('aria-pressed',state.wipe);
+  $('#memo').value=state.memo;
+}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1600);}
+
+function bind(){
+  $('#people').onclick=e=>{const b=e.target.closest('.person');if(b)openInput(people[+b.dataset.i]);};
+  $('#back').onclick=goList;
+  $$('[data-add]').forEach(b=>b.onclick=()=>{state.water=Math.max(0,state.water+ +b.dataset.add);syncUI();});
+  $('#w-input').oninput=e=>{state.water=Math.max(0,+e.target.value||0);
+    $('#w-now').textContent=state.water;
+    $('#w-bar').style.width=Math.min(100,state.water/1500*100)+'%';
+    $('#w-msg').textContent=state.water>=1000?'よい調子です':(state.water>0?'あと少し（目標1000〜1500）':'目標 1000〜1500mL');};
+  $$('[data-step]').forEach(b=>b.onclick=()=>{const k=b.dataset.step;state[k]=Math.max(0,state[k]+ +b.dataset.d);syncUI();});
+  $('#stool-type').onclick=e=>{const c=e.target.closest('.chip');if(!c)return;
+    state.stoolType=state.stoolType===c.dataset.st?'':c.dataset.st;syncUI();};
+  $$('[data-med]').forEach(b=>b.onclick=()=>{state.med[b.dataset.med]=!state.med[b.dataset.med];syncUI();});
+  $('#oral').onclick=()=>{state.oral=!state.oral;syncUI();};
+  $('#wipe').onclick=()=>{state.wipe=!state.wipe;syncUI();};
+  $('#memo').oninput=e=>state.memo=e.target.value;
+  $('#save').onclick=saveRecord;
+  $('#edit-people').onclick=editPeople;
+}
+async function saveRecord(){
+  const rec={
+    記録日:$('#date').value, 利用者:cur, 水分量:state.water,
+    服薬朝:state.med.m?'実施':'未', 服薬昼:state.med.n?'実施':'未', 服薬夕:state.med.e?'実施':'未',
+    排尿:state.urine, 排便:state.stool, 便性状:state.stoolType,
+    口腔ケア:state.oral?'実施':'未', 清拭:state.wipe?'実施':'未', 特記:state.memo,
+    保存時刻:new Date().toISOString()
+  };
+  // デモ保存（本番はここでGoogleフォーム/シートへ送信）
+  await store.set('easy_rec:'+cur+':'+rec.記録日, JSON.stringify(rec));
+  toast(cur+' を ほぞんしました');
+  setTimeout(goList,650);
+}
+async function editPeople(){
+  const cur=people.join('、');
+  const v=prompt('利用者の略称を「、」で区切って入力してください（実名は避ける）',cur);
+  if(v===null)return;
+  people=v.split(/[、,]/).map(s=>s.trim()).filter(Boolean);
+  await store.set(RKEY,JSON.stringify(people)); renderPeople();
+}
+init();
+</script>
