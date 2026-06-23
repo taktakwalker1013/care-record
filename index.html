@@ -240,6 +240,8 @@ const store={
   async set(k,v){try{if(hasWS){await window.storage.set(k,v,false);}else{localStorage.setItem(k,v);}}catch(e){}},
 };
 const RKEY='easy_people', HKEY='easy_helpers', GKEY='easy_gas_url', PKEY='easy_pending';
+// 既定の送信先（全端末で自動連携）。⚙設定で変更した場合はそちらが優先されます。
+const DEFAULT_GAS_URL='https://script.google.com/macros/s/AKfycbyU2HFJSxD1QILMnSeoLuNJ9MS61MkZ_M0zgpKrMJ9ee_i35al012saFGnmnm6diEz0/exec';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 
 let people=[], helpers=[], curHelper=null, cur=null, gasUrl=null;
@@ -258,6 +260,7 @@ async function init(){
   helpers=hj?JSON.parse(hj):['ヘルパーA','ヘルパーB','ヘルパーC','ヘルパーD'];
   if(!hj)await store.set(HKEY,JSON.stringify(helpers));
   gasUrl=await store.get(GKEY);
+  if(!gasUrl){ gasUrl=DEFAULT_GAS_URL; }   // 未設定なら既定の送信先を使用
   renderHelpers(); renderPeople(); updateCrumb(); bind();
   await refreshSync(); flushPending();
 }
