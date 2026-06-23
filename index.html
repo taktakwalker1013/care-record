@@ -1,0 +1,456 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>記録入力</title>
+<!-- iPad ホーム画面でアプリのように表示 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="記録入力">
+<meta name="theme-color" content="#1f3a5f">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<style>
+  :root{
+    --ink:#16263c; --slate:#1f3a5f; --bg:#eef2f7; --card:#fff; --line:#cfd9e6;
+    --teal:#0f766e; --teal-d:#0b5b54; --blue:#2563b4; --muted:#5e6c80;
+    --ok:#157f4a; --okbg:#e3f3ea; --okline:#8fcca8;
+    --warn:#b42318; --warnbg:#fdecea;
+    --shadow:0 2px 6px rgba(20,35,59,.10),0 8px 24px rgba(20,35,59,.07);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+    font-size:19px;line-height:1.5;-webkit-font-smoothing:antialiased;touch-action:manipulation}
+  .app{max-width:820px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+  header{background:linear-gradient(180deg,var(--slate),#193150);color:#fff;
+    padding:16px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:10;border-bottom:4px solid var(--teal)}
+  header .ttl{font-weight:800;font-size:20px;letter-spacing:.03em}
+  header .date{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:15px;color:#cdd9ec}
+  header input[type=date]{font:inherit;font-size:17px;border:0;border-radius:10px;padding:8px 10px}
+  .back{background:#fff;color:var(--slate);border:0;border-radius:12px;padding:10px 16px;font:inherit;font-weight:800;font-size:17px;cursor:pointer}
+
+  /* 選択中バー（常時表示） */
+  .crumb{position:sticky;top:64px;z-index:9;background:#dde6f1;border-bottom:1px solid var(--line);
+    padding:8px 16px;display:flex;align-items:center;gap:8px;font-size:14px;color:var(--slate);flex-wrap:wrap}
+  .crumb .seg{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:4px 12px;font-weight:800}
+  .crumb .seg .k{font-size:12px;color:var(--muted);font-weight:700}
+  .crumb .seg.helper{border-color:#9cc7c2;background:#e6f4f2;color:var(--teal-d)}
+  .crumb .seg.user{border-color:#9cbbe6;background:#e9f0fb;color:var(--blue)}
+  .crumb .seg.empty{color:var(--muted);background:#eef2f7}
+  .crumb .arrow{color:var(--muted)}
+  .crumb .sync{margin-left:auto;font-size:12px;font-weight:800;border-radius:999px;padding:4px 10px;border:1px solid var(--line);background:#fff;color:var(--muted)}
+  .crumb .sync.ok{border-color:var(--okline);background:var(--okbg);color:var(--ok)}
+  .crumb .sync.wait{border-color:#e3c08f;background:#fdf4e3;color:#9a6a00}
+  .crumb .sync.off{border-color:var(--line);background:#eef2f7;color:var(--muted)}
+
+  main{flex:1;padding:18px 16px 40px}
+  .lead{font-size:21px;font-weight:800;margin:4px 4px 16px}
+  .lead .who{color:var(--teal)}
+
+  /* 選択カード（ヘルパー・利用者共通） */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+  .person{background:var(--card);border:2px solid var(--line);border-radius:18px;
+    padding:26px 10px;font-size:24px;font-weight:800;color:var(--ink);cursor:pointer;
+    box-shadow:var(--shadow);transition:.08s;min-height:96px;display:flex;align-items:center;justify-content:center;text-align:center}
+  .person:active{transform:scale(.97);border-color:var(--teal);background:#f1faf8}
+
+  /* 入力カード */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 18px 20px;box-shadow:var(--shadow);margin-bottom:16px}
+  .card>.lab{font-size:18px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+  .card>.lab .tag{font-size:13px;font-weight:700;color:var(--muted)}
+
+  /* 水分 */
+  .water-now{display:flex;align-items:baseline;gap:8px;justify-content:center;margin:2px 0 6px}
+  .water-now b{font-size:54px;font-weight:900;color:var(--blue);font-variant-numeric:tabular-nums}
+  .water-now span{font-size:20px;font-weight:800;color:var(--muted)}
+  .track{height:16px;border-radius:10px;background:#e7edf5;overflow:hidden;border:1px solid var(--line);margin:6px 0 4px}
+  .track>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3aa0d8,#0f766e);transition:.25s}
+  .track-lab{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:14px}
+  .addrow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+  .add{border:2px solid var(--okline);background:var(--okbg);color:var(--ok);border-radius:14px;
+    padding:16px 4px;font:inherit;font-weight:900;font-size:19px;cursor:pointer}
+  .add:active{transform:scale(.96)}
+  .add.minus{border-color:#e3b7b3;background:#fbeeed;color:var(--warn)}
+  .waterbox{display:flex;align-items:center;gap:10px;justify-content:center}
+  .waterbox input{width:160px;font:inherit;font-size:28px;font-weight:800;text-align:center;
+    border:2px solid var(--line);border-radius:14px;padding:10px}
+  .waterbox .unit{font-size:20px;font-weight:800;color:var(--muted)}
+
+  /* ステッパー */
+  .stepper{display:flex;align-items:center;justify-content:center;gap:18px}
+  .stepper button{width:68px;height:68px;border-radius:50%;border:2px solid var(--line);background:#fff;
+    font-size:34px;font-weight:900;color:var(--slate);cursor:pointer;line-height:1}
+  .stepper button:active{transform:scale(.94);background:#f1f5fa}
+  .stepper .val{font-size:46px;font-weight:900;min-width:90px;text-align:center;font-variant-numeric:tabular-nums}
+  .stepper .val small{font-size:18px;color:var(--muted);font-weight:800}
+
+  /* トグル群 */
+  .toggles{display:flex;gap:12px;flex-wrap:wrap}
+  .tg{flex:1 1 0;min-width:96px;border:2px solid var(--line);background:#fff;border-radius:14px;
+    padding:18px 6px;font:inherit;font-size:20px;font-weight:800;color:var(--muted);cursor:pointer;text-align:center}
+  .tg:active{transform:scale(.97)}
+  .tg[aria-pressed=true]{background:var(--okbg);border-color:var(--okline);color:var(--ok)}
+  .tg[aria-pressed=true]::after{content:" ✓"}
+  .chips{display:flex;gap:10px;flex-wrap:wrap}
+  .chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:12px 20px;font:inherit;font-size:18px;font-weight:800;color:var(--muted);cursor:pointer}
+  .chip[aria-pressed=true]{background:#e9f0fb;border-color:#9cbbe6;color:var(--blue)}
+  .memo{width:100%;font:inherit;font-size:18px;border:2px solid var(--line);border-radius:14px;padding:12px;min-height:64px}
+
+  /* 当日の累積・履歴（小さく表示） */
+  .hist{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px;font-size:13px;color:var(--muted)}
+  .hist .sum{font-weight:800;color:var(--slate);font-size:14px}
+  .hist .sum b{color:var(--blue)}
+  .hist ul{margin:7px 0 0;padding:0;list-style:none}
+  .hist li{display:flex;gap:10px;padding:3px 0;border-top:1px solid #eef2f7}
+  .hist li .tm{color:var(--blue);font-weight:800;font-variant-numeric:tabular-nums;min-width:48px}
+  .hist .none{color:var(--muted);font-style:normal}
+
+  .save{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(238,242,247,0),var(--bg) 26%);padding:14px 0 18px}
+  .save button{width:100%;background:var(--teal);color:#fff;border:0;border-radius:18px;
+    padding:22px;font:inherit;font-size:24px;font-weight:900;cursor:pointer;box-shadow:var(--shadow)}
+  .save button:active{background:var(--teal-d);transform:translateY(1px)}
+
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(24px);opacity:0;
+    background:var(--ok);color:#fff;padding:18px 30px;border-radius:16px;font-weight:900;font-size:22px;box-shadow:var(--shadow);transition:.25s;z-index:50;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .manage{margin-top:10px;text-align:center;display:flex;flex-direction:column;gap:6px}
+  .manage button{background:none;border:0;color:var(--muted);font:inherit;font-size:15px;text-decoration:underline;cursor:pointer}
+  .hidden{display:none!important}
+</style>
+
+<div class="app">
+  <header>
+    <button class="back hidden" id="back">← もどる</button>
+    <span class="ttl" id="htitle">ヘルパーをえらぶ</span>
+    <span class="date">日づけ <input type="date" id="date"></span>
+  </header>
+
+  <!-- 選択中バー（常時表示） -->
+  <div class="crumb" id="crumb">
+    <span class="seg helper empty" id="seg-helper"><span class="k">ヘルパー</span><span id="cr-helper">未選択</span></span>
+    <span class="arrow">→</span>
+    <span class="seg user empty" id="seg-user"><span class="k">利用者</span><span id="cr-user">未選択</span></span>
+    <span class="sync off" id="sync">連携 未設定</span>
+  </div>
+
+  <main>
+    <!-- 画面0: ヘルパー選択 -->
+    <section id="screen-helper">
+      <div class="lead">あなた（<span class="who">ヘルパー</span>）の名前をタップ</div>
+      <div class="grid" id="helpers"></div>
+      <div class="manage">
+        <button id="edit-helpers">＋ ヘルパーをふやす / へらす</button>
+        <button id="cfg-gas">⚙ Google連携の設定</button>
+      </div>
+    </section>
+
+    <!-- 画面1: 利用者選択 -->
+    <section id="screen-list" class="hidden">
+      <div class="lead">きょうの記録をする<span class="who"> 利用者</span>をタップ</div>
+      <div class="grid" id="people"></div>
+      <div class="manage"><button id="edit-people">＋ 利用者をふやす / へらす</button></div>
+    </section>
+
+    <!-- 画面2: 入力 -->
+    <section id="screen-input" class="hidden">
+      <div class="lead"><span class="who" id="who"></span> さんの記録</div>
+
+      <div class="card">
+        <div class="lab">💧 水分（みずぶん）<span class="tag">いま入力する分</span></div>
+        <div class="water-now"><b id="w-now">0</b><span>mL</span></div>
+        <div class="track"><i id="w-bar"></i></div>
+        <div class="track-lab"><span>0</span><span id="w-msg">目標 1000〜1500mL</span><span>1500</span></div>
+        <div class="addrow">
+          <button class="add" data-add="100">＋100</button>
+          <button class="add" data-add="150">＋150<br><small>コップ</small></button>
+          <button class="add" data-add="200">＋200</button>
+          <button class="add minus" data-add="-100">－100</button>
+        </div>
+        <div class="waterbox">
+          <span class="unit">直接入力</span>
+          <input type="number" id="w-input" inputmode="numeric" min="0" step="50" placeholder="0">
+          <span class="unit">mL</span>
+        </div>
+        <div class="hist" id="h-water"></div>
+      </div>
+
+      <div class="card">
+        <div class="lab">🚻 排尿（はいにょう）<span class="tag">いま入力する回数</span></div>
+        <div class="stepper">
+          <button data-step="urine" data-d="-1">−</button>
+          <div class="val"><span id="urine">0</span><small> 回</small></div>
+          <button data-step="urine" data-d="1">＋</button>
+        </div>
+        <div class="hist" id="h-urine"></div>
+      </div>
+
+      <div class="card">
+        <div class="lab">💩 排便（はいべん）<span class="tag">かいすう・かたち</span></div>
+        <div class="stepper" style="margin-bottom:14px">
+          <button data-step="stool" data-d="-1">−</button>
+          <div class="val"><span id="stool">0</span><small> 回</small></div>
+          <button data-step="stool" data-d="1">＋</button>
+        </div>
+        <div class="chips" id="stool-type" style="justify-content:center">
+          <span class="chip" data-st="普通" aria-pressed="false">ふつう</span>
+          <span class="chip" data-st="軟便" aria-pressed="false">やわらかい</span>
+          <span class="chip" data-st="水様" aria-pressed="false">みずっぽい</span>
+          <span class="chip" data-st="硬便" aria-pressed="false">かたい</span>
+        </div>
+        <div class="hist" id="h-stool"></div>
+      </div>
+
+      <div class="card">
+        <div class="lab">💊 服薬（ふくやく）<span class="tag">のんだらタップ</span></div>
+        <div class="toggles">
+          <button class="tg" data-med="m" aria-pressed="false">朝</button>
+          <button class="tg" data-med="n" aria-pressed="false">昼</button>
+          <button class="tg" data-med="e" aria-pressed="false">夕</button>
+        </div>
+        <div class="hist" id="h-med"></div>
+      </div>
+
+      <div class="card">
+        <div class="lab">🪥 口腔ケア・清拭<span class="tag">やったらタップ</span></div>
+        <div class="toggles">
+          <button class="tg" id="oral" aria-pressed="false">口腔ケア</button>
+          <button class="tg" id="wipe" aria-pressed="false">清拭</button>
+        </div>
+        <div class="hist" id="h-care"></div>
+      </div>
+
+      <div class="card">
+        <div class="lab">📝 ひとこと<span class="tag">きづいたこと（任意）</span></div>
+        <textarea class="memo" id="memo" placeholder="体調や様子など（書かなくてOK）"></textarea>
+        <div class="hist" id="h-memo"></div>
+      </div>
+
+      <div class="save"><button id="save">この内容をほぞんする</button></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast">ほぞんしました</div>
+
+<script>
+/* 保存層: チャット内=永続storage / ローカル=localStorage 自動切替 */
+const hasWS=(typeof window!=='undefined'&&window.storage&&window.storage.get);
+const store={
+  async get(k){try{if(hasWS){const r=await window.storage.get(k,false);return r?r.value:null;}return localStorage.getItem(k);}catch(e){return null;}},
+  async set(k,v){try{if(hasWS){await window.storage.set(k,v,false);}else{localStorage.setItem(k,v);}}catch(e){}},
+};
+const RKEY='easy_people', HKEY='easy_helpers', GKEY='easy_gas_url', PKEY='easy_pending';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+
+let people=[], helpers=[], curHelper=null, cur=null, gasUrl=null;
+const state={water:0,urine:0,stool:0,stoolType:'',med:{m:false,n:false,e:false},oral:false,wipe:false,memo:''};
+
+function todayStr(){const d=new Date();return d.toISOString().slice(0,10);}
+function nowHM(){const d=new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+async function init(){
+  $('#date').value=todayStr();
+  const pj=await store.get(RKEY);
+  people=pj?JSON.parse(pj):['KY様','MU様','NAK様','S様','T様','TK様'];
+  if(!pj)await store.set(RKEY,JSON.stringify(people));
+  const hj=await store.get(HKEY);
+  helpers=hj?JSON.parse(hj):['ヘルパーA','ヘルパーB','ヘルパーC','ヘルパーD'];
+  if(!hj)await store.set(HKEY,JSON.stringify(helpers));
+  gasUrl=await store.get(GKEY);
+  renderHelpers(); renderPeople(); updateCrumb(); bind();
+  await refreshSync(); flushPending();
+}
+function renderHelpers(){
+  $('#helpers').innerHTML=helpers.map((h,i)=>`<button class="person helper" data-i="${i}">${esc(h)}</button>`).join('');
+}
+function renderPeople(){
+  $('#people').innerHTML=people.map((p,i)=>`<button class="person" data-i="${i}">${esc(p)}</button>`).join('');
+}
+
+function updateCrumb(){
+  $('#cr-helper').textContent=curHelper||'未選択';
+  $('#seg-helper').classList.toggle('empty',!curHelper);
+  $('#cr-user').textContent=cur||'未選択';
+  $('#seg-user').classList.toggle('empty',!cur);
+}
+async function refreshSync(){
+  const p=await getPending(), n=p.length, s=$('#sync');
+  s.className='sync';
+  if(!gasUrl){ s.classList.add('off'); s.textContent='連携 未設定'; }
+  else if(n>0){ s.classList.add('wait'); s.textContent='送信待ち '+n; }
+  else { s.classList.add('ok'); s.textContent='連携OK'; }
+}
+
+/* ---- 画面遷移 ---- */
+function openPeople(name){
+  curHelper=name; cur=null;
+  $('#htitle').textContent='利用者をえらぶ';
+  $('#back').classList.remove('hidden');
+  $('#screen-helper').classList.add('hidden'); $('#screen-input').classList.add('hidden');
+  $('#screen-list').classList.remove('hidden');
+  updateCrumb(); window.scrollTo(0,0);
+}
+async function openInput(name){
+  cur=name;
+  Object.assign(state,{water:0,urine:0,stool:0,stoolType:'',med:{m:false,n:false,e:false},oral:false,wipe:false,memo:''});
+  $('#who').textContent=name;
+  $('#htitle').textContent='記録を入力';
+  $('#back').classList.remove('hidden');
+  $('#screen-helper').classList.add('hidden'); $('#screen-list').classList.add('hidden');
+  $('#screen-input').classList.remove('hidden');
+  updateCrumb(); syncUI(); await renderHistory(); window.scrollTo(0,0);
+}
+function goPeople(){
+  cur=null;
+  $('#htitle').textContent='利用者をえらぶ';
+  $('#back').classList.remove('hidden');
+  $('#screen-input').classList.add('hidden'); $('#screen-helper').classList.add('hidden');
+  $('#screen-list').classList.remove('hidden');
+  updateCrumb(); window.scrollTo(0,0);
+}
+function goHelper(){
+  curHelper=null; cur=null;
+  $('#htitle').textContent='ヘルパーをえらぶ';
+  $('#back').classList.add('hidden');
+  $('#screen-input').classList.add('hidden'); $('#screen-list').classList.add('hidden');
+  $('#screen-helper').classList.remove('hidden');
+  updateCrumb(); window.scrollTo(0,0);
+}
+function onBack(){
+  if(!$('#screen-input').classList.contains('hidden')) goPeople();
+  else if(!$('#screen-list').classList.contains('hidden')) goHelper();
+}
+
+function syncUI(){
+  $('#w-now').textContent=state.water;
+  $('#w-input').value=state.water||'';
+  $('#w-bar').style.width=Math.max(0,Math.min(100,state.water/1500*100))+'%';
+  $('#w-msg').textContent= state.water>=1000?'よい調子です':(state.water>0?'あと少し（目標1000〜1500）':'目標 1000〜1500mL');
+  $('#urine').textContent=state.urine;
+  $('#stool').textContent=state.stool;
+  $$('#stool-type .chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.st===state.stoolType));
+  $$('[data-med]').forEach(b=>b.setAttribute('aria-pressed',state.med[b.dataset.med]));
+  $('#oral').setAttribute('aria-pressed',state.oral);
+  $('#wipe').setAttribute('aria-pressed',state.wipe);
+  $('#memo').value=state.memo;
+}
+
+/* ---- 当日の累積・履歴・入力時間 ---- */
+function recKey(name,date){return 'easy_recs:'+name+':'+date;}
+async function getRecs(name,date){const j=await store.get(recKey(name,date));return j?JSON.parse(j):[];}
+async function renderHistory(){
+  const recs=await getRecs(cur,$('#date').value);
+  const none='<span class="none">まだ記録はありません</span>';
+  // 水分
+  const wsum=recs.reduce((a,r)=>a+(+r.水分量||0),0);
+  $('#h-water').innerHTML='<div class="sum">本日の累計 <b>'+wsum+'</b> mL（'+recs.length+'件）</div>'+
+    (recs.length?'<ul>'+recs.map(r=>'<li><span class="tm">'+(r.入力時刻||'--:--')+'</span><span>＋'+(+r.水分量||0)+'mL</span></li>').join('')+'</ul>':none);
+  // 排尿
+  const usum=recs.reduce((a,r)=>a+(+r.排尿||0),0);
+  $('#h-urine').innerHTML='<div class="sum">本日の累計 <b>'+usum+'</b> 回</div>'+
+    (recs.length?'<ul>'+recs.map(r=>'<li><span class="tm">'+(r.入力時刻||'--:--')+'</span><span>'+(+r.排尿||0)+'回</span></li>').join('')+'</ul>':none);
+  // 排便
+  const ssum=recs.reduce((a,r)=>a+(+r.排便||0),0);
+  $('#h-stool').innerHTML='<div class="sum">本日の累計 <b>'+ssum+'</b> 回</div>'+
+    (recs.length?'<ul>'+recs.map(r=>'<li><span class="tm">'+(r.入力時刻||'--:--')+'</span><span>'+(+r.排便||0)+'回'+(r.便性状?'・'+esc(r.便性状):'')+'</span></li>').join('')+'</ul>':none);
+  // 服薬
+  const md={朝:false,昼:false,夕:false};
+  recs.forEach(r=>{if(r.服薬朝==='実施')md.朝=true;if(r.服薬昼==='実施')md.昼=true;if(r.服薬夕==='実施')md.夕=true;});
+  $('#h-med').innerHTML='<div class="sum">本日の服薬 '+['朝','昼','夕'].map(k=>k+(md[k]?'✓':'－')).join(' / ')+'</div>'+
+    (recs.length?'<ul>'+recs.filter(r=>r.服薬朝==='実施'||r.服薬昼==='実施'||r.服薬夕==='実施').map(r=>'<li><span class="tm">'+(r.入力時刻||'--:--')+'</span><span>'+['朝','昼','夕'].filter((k,i)=>[r.服薬朝,r.服薬昼,r.服薬夕][i]==='実施').join('・')+'</span></li>').join('')+'</ul>':'');
+  // 口腔ケア・清拭
+  $('#h-care').innerHTML=(recs.length?'<ul>'+recs.filter(r=>r.口腔ケア==='実施'||r.清拭==='実施').map(r=>'<li><span class="tm">'+(r.入力時刻||'--:--')+'</span><span>'+[r.口腔ケア==='実施'?'口腔ケア':'',r.清拭==='実施'?'清拭':''].filter(Boolean).join('・')+'</span></li>').join('')+'</ul>':none);
+  if($('#h-care').innerHTML==='<ul></ul>')$('#h-care').innerHTML='<span class="none">本日の実施記録はありません</span>';
+  // ひとこと履歴
+  const memos=recs.filter(r=>r.特記&&r.特記.trim());
+  $('#h-memo').innerHTML=memos.length?'<ul>'+memos.map(r=>'<li><span class="tm">'+(r.入力時刻||'--:--')+'</span><span>'+esc(r.特記)+'</span></li>').join('')+'</ul>':'';
+}
+
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1800);}
+
+/* ---- Google連携（送信＋オフライン待ち行列） ---- */
+async function getPending(){const j=await store.get(PKEY);return j?JSON.parse(j):[];}
+async function setPending(a){await store.set(PKEY,JSON.stringify(a));}
+async function sendOne(rec){
+  if(!gasUrl)return false;
+  try{
+    await fetch(gasUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(rec)});
+    return true; // no-cors: 到達できれば成功とみなす
+  }catch(e){return false;}
+}
+async function flushPending(){
+  if(!gasUrl)return;
+  let p=await getPending(); if(!p.length){await refreshSync();return;}
+  const rest=[];
+  for(const r of p){ const ok=await sendOne(r); if(!ok)rest.push(r); }
+  await setPending(rest); await refreshSync();
+}
+
+function bind(){
+  $('#helpers').onclick=e=>{const b=e.target.closest('.person');if(b)openPeople(helpers[+b.dataset.i]);};
+  $('#people').onclick=e=>{const b=e.target.closest('.person');if(b)openInput(people[+b.dataset.i]);};
+  $('#back').onclick=onBack;
+  $$('[data-add]').forEach(b=>b.onclick=()=>{state.water=Math.max(0,state.water+ +b.dataset.add);syncUI();});
+  $('#w-input').oninput=e=>{state.water=Math.max(0,+e.target.value||0);
+    $('#w-now').textContent=state.water;
+    $('#w-bar').style.width=Math.min(100,state.water/1500*100)+'%';
+    $('#w-msg').textContent=state.water>=1000?'よい調子です':(state.water>0?'あと少し（目標1000〜1500）':'目標 1000〜1500mL');};
+  $$('[data-step]').forEach(b=>b.onclick=()=>{const k=b.dataset.step;state[k]=Math.max(0,state[k]+ +b.dataset.d);syncUI();});
+  $('#stool-type').onclick=e=>{const c=e.target.closest('.chip');if(!c)return;
+    state.stoolType=state.stoolType===c.dataset.st?'':c.dataset.st;syncUI();};
+  $$('[data-med]').forEach(b=>b.onclick=()=>{state.med[b.dataset.med]=!state.med[b.dataset.med];syncUI();});
+  $('#oral').onclick=()=>{state.oral=!state.oral;syncUI();};
+  $('#wipe').onclick=()=>{state.wipe=!state.wipe;syncUI();};
+  $('#memo').oninput=e=>state.memo=e.target.value;
+  $('#save').onclick=saveRecord;
+  $('#edit-helpers').onclick=editHelpers;
+  $('#edit-people').onclick=editPeople;
+  $('#cfg-gas').onclick=configGas;
+  $('#date').onchange=()=>{ if(!$('#screen-input').classList.contains('hidden')) renderHistory(); };
+}
+
+async function saveRecord(){
+  const date=$('#date').value;
+  const rec={
+    記録日:date, 入力時刻:nowHM(), ヘルパー:curHelper, 利用者:cur, 水分量:state.water,
+    服薬朝:state.med.m?'実施':'未', 服薬昼:state.med.n?'実施':'未', 服薬夕:state.med.e?'実施':'未',
+    排尿:state.urine, 排便:state.stool, 便性状:state.stoolType,
+    口腔ケア:state.oral?'実施':'未', 清拭:state.wipe?'実施':'未', 特記:state.memo,
+    保存時刻:new Date().toISOString()
+  };
+  // 1) 端末に追記保存（履歴・累計の元データ）
+  const key=recKey(cur,date);
+  const arr=await getRecs(cur,date); arr.push(rec); await store.set(key,JSON.stringify(arr));
+  // 2) Googleへ送信（失敗・未設定なら待ち行列へ）
+  let sent=false;
+  if(gasUrl) sent=await sendOne(rec);
+  if(!sent){ const p=await getPending(); p.push(rec); await setPending(p); }
+  await refreshSync();
+  toast(cur+' を ほぞんしました'+(gasUrl?(sent?'（送信済）':'（送信待ち）'):''));
+  setTimeout(goPeople,750);
+}
+
+async function editHelpers(){
+  const v=prompt('ヘルパーの略称を「、」で区切って入力してください（実名は避ける）',helpers.join('、'));
+  if(v===null)return;
+  helpers=v.split(/[、,]/).map(s=>s.trim()).filter(Boolean);
+  await store.set(HKEY,JSON.stringify(helpers)); renderHelpers();
+}
+async function editPeople(){
+  const v=prompt('利用者の略称を「、」で区切って入力してください（実名は避ける）',people.join('、'));
+  if(v===null)return;
+  people=v.split(/[、,]/).map(s=>s.trim()).filter(Boolean);
+  await store.set(RKEY,JSON.stringify(people)); renderPeople();
+}
+async function configGas(){
+  const v=prompt('Googleスプレッドシート送信先のURL（Apps ScriptのウェブアプリURL）を貼り付けてください。\n空にすると連携を解除します。',gasUrl||'');
+  if(v===null)return;
+  gasUrl=v.trim()||null;
+  await store.set(GKEY,gasUrl||'');
+  await refreshSync();
+  if(gasUrl){ toast('連携先を設定しました'); flushPending(); }
+  else toast('連携を解除しました');
+}
+init();
+</script>
