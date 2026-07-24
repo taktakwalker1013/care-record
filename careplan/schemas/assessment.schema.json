@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "assessment.schema.json",
+  "title": "アセスメント中間表現",
+  "description": "01_basic_info.md〜07_user_voice.md（課題分析標準項目1〜23）を読取スキルで無損失にパースした構造化データ。ここに載る値は事実であり、後段のエージェントはここを唯一の根拠とする。",
+  "type": "object",
+  "required": ["meta", "basic", "assessment_summary"],
+  "additionalProperties": true,
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["alias"],
+      "properties": {
+        "alias": { "type": "string", "description": "仮名（例: A様）。実名は入れない。" },
+        "pseudonymized": { "type": "boolean", "description": "仮名化済みか" },
+        "assessed_on": { "type": "string", "description": "アセスメント実施日（和暦可）" },
+        "assessor": { "type": "string" },
+        "reason": { "type": "string", "description": "アセスメント理由（初回/更新等）" },
+        "source_files": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "basic": {
+      "type": "object",
+      "properties": {
+        "age": { "type": ["integer", "string"] },
+        "sex": { "type": "string" },
+        "care_level": { "type": "string", "description": "要介護度（例: 要介護5）" },
+        "cert_period": { "type": "string", "description": "認定有効期間" },
+        "residence": { "type": "string", "description": "居住区分（在宅/施設入所 等）" },
+        "facility": { "type": "string" },
+        "household": { "type": "string", "description": "世帯区分・家族構成の要約" },
+        "key_person": {
+          "type": "object",
+          "properties": {
+            "relation": { "type": "string" },
+            "alias": { "type": "string" },
+            "cohabit": { "type": "string", "description": "同居/別居" },
+            "involvement": { "type": "string" },
+            "burden": { "type": "string" },
+            "willingness": { "type": "string" }
+          }
+        },
+        "emergency_contacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rank": { "type": "integer" },
+              "contact": { "type": "string" },
+              "relation": { "type": "string" }
+            }
+          }
+        },
+        "insurance": { "type": "object", "additionalProperties": { "type": "string" } },
+        "medical_dependency": { "type": "string", "description": "医療依存度（高/中/低）" }
+      }
+    },
+    "independence": {
+      "type": "object",
+      "description": "日常生活自立度",
+      "properties": {
+        "disabled_elderly": { "type": "string", "description": "障害高齢者の日常生活自立度（例: C2）" },
+        "dementia_elderly": { "type": "string", "description": "認知症高齢者の日常生活自立度（例: IV）" }
+      }
+    },
+    "health": {
+      "type": "object",
+      "properties": {
+        "diagnoses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "onset": { "type": "string" }
+            }
+          }
+        },
+        "medication": { "type": "string", "description": "服薬管理状況" },
+        "measurements": {
+          "type": "object",
+          "properties": {
+            "height_cm": { "type": ["number", "string"] },
+            "weight_kg": { "type": ["number", "string"] },
+            "bmi": { "type": ["number", "string"] },
+            "paralysis": { "type": "string" },
+            "pressure_ulcer": { "type": "string" }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "adl": {
+      "type": "object",
+      "description": "各動作 -> 状態（自立/一部介助/全介助/できない 等）",
+      "additionalProperties": { "type": "string" }
+    },
+    "iadl": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "cognition": { "type": "object", "additionalProperties": true },
+    "communication": { "type": "object", "additionalProperties": true },
+    "social": { "type": "object", "additionalProperties": true },
+    "excretion": { "type": "object", "additionalProperties": true },
+    "skin": { "type": "object", "additionalProperties": true, "description": "褥瘡・皮膚・清潔" },
+    "oral": { "type": "object", "additionalProperties": true },
+    "nutrition": { "type": "object", "additionalProperties": true, "description": "食事摂取・経管栄養等" },
+    "bpsd": { "type": "object", "additionalProperties": true },
+    "family_care": { "type": "object", "additionalProperties": true, "description": "家族等の状況・介護力" },
+    "environment": { "type": "object", "additionalProperties": true, "description": "居住環境" },
+    "special": { "type": "object", "additionalProperties": true, "description": "特別な状況（虐待・看取り等）" },
+    "daily_rhythm": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "time": { "type": "string" },
+          "activity": { "type": "string" }
+        }
+      }
+    },
+    "current_services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "service": { "type": "string" },
+          "provider": { "type": "string" },
+          "kind": { "type": "string", "description": "介護保険/障害福祉/医療/インフォーマル" },
+          "frequency": { "type": "string" }
+        }
+      }
+    },
+    "voice": {
+      "type": "object",
+      "description": "本人・家族の主訴／意向（07_user_voice, 03の主訴）",
+      "properties": {
+        "self": { "type": "string" },
+        "family": { "type": "string" }
+      }
+    },
+    "assessment_summary": {
+      "type": "object",
+      "description": "03_assessment.md 末尾の総括。第2表ニーズ抽出の直接の材料。",
+      "required": ["strengths", "issues"],
+      "properties": {
+        "overview": { "type": "string" },
+        "strengths": { "type": "array", "items": { "type": "string" }, "description": "強み（ストレングス）" },
+        "issues": { "type": "array", "items": { "type": "string" }, "description": "課題（ニーズの源泉）" },
+        "priority_domains": { "type": "array", "items": { "type": "string" }, "description": "優先すべき支援領域" }
+      }
+    }
+  }
+}

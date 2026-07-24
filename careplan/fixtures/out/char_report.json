@@ -1,0 +1,160 @@
+{
+  "ok": true,
+  "over_count": 0,
+  "cells": [
+    {
+      "cell": "table1.intent_self",
+      "chars": 40,
+      "limit": 180,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table1.intent_family",
+      "chars": 59,
+      "limit": 180,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table1.policy",
+      "chars": 139,
+      "limit": 240,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table1.living_support_reason",
+      "chars": 0,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[0].need",
+      "chars": 33,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[0].long_goal",
+      "chars": 27,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[0].short_goal",
+      "chars": 22,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[0].service_content",
+      "chars": 27,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[0].service_kind",
+      "chars": 11,
+      "limit": 40,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[0].frequency",
+      "chars": 3,
+      "limit": 24,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[1].need",
+      "chars": 29,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[1].long_goal",
+      "chars": 21,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[1].short_goal",
+      "chars": 19,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[1].service_content",
+      "chars": 24,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[1].service_kind",
+      "chars": 4,
+      "limit": 40,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[1].frequency",
+      "chars": 7,
+      "limit": 24,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[2].need",
+      "chars": 27,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[2].long_goal",
+      "chars": 19,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[2].short_goal",
+      "chars": 18,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[2].service_content",
+      "chars": 24,
+      "limit": 60,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[2].service_kind",
+      "chars": 4,
+      "limit": 40,
+      "over": false,
+      "overflow": 0
+    },
+    {
+      "cell": "table2[2].frequency",
+      "chars": 3,
+      "limit": 24,
+      "over": false,
+      "overflow": 0
+    }
+  ]
+}

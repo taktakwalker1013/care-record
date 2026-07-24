@@ -1,0 +1,17 @@
+{
+  "_comment": "帳票セルごとの推奨文字数上限。字数調整エージェントの合否判定と転記時の検査に使う。実際の帳票様式に合わせて調整すること（ここは一般的な目安値）。",
+  "table1": {
+    "intent_self": 180,
+    "intent_family": 180,
+    "policy": 240,
+    "living_support_reason": 60
+  },
+  "table2": {
+    "need": 60,
+    "long_goal": 60,
+    "short_goal": 60,
+    "service_content": 60,
+    "service_kind": 40,
+    "frequency": 24
+  }
+}

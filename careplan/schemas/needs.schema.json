@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "needs.schema.json",
+  "title": "ニーズ抽出＋型判定 中間表現",
+  "description": "型判定エージェントとニーズ抽出エージェントの出力。assessment_summary の課題／強み／優先領域を『生活全般の解決すべき課題（ニーズ）』候補へ翻訳し、各ニーズにアセスメント上の根拠を必ず紐づける。",
+  "type": "object",
+  "required": ["plan_type", "needs"],
+  "additionalProperties": false,
+  "properties": {
+    "plan_type": {
+      "type": "object",
+      "description": "適用するケアプランテンプレートの型判定結果",
+      "required": ["code", "rationale"],
+      "properties": {
+        "code": { "type": "string", "enum": ["type1A", "type1B", "type2A", "generic"], "description": "type1A=住宅型+重度訪問介護併用 / type1B=住宅型+施設サービス併用 / type2A=自宅独居+重度訪問介護 / generic=定型外" },
+        "rationale": { "type": "string", "description": "型を選んだ根拠（生活拠点・介護保険・障害福祉要件などの充足）" },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+    "needs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "statement", "evidence"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "description": "N1, N2 ..." },
+          "statement": { "type": "string", "description": "ニーズ文（利用者本位の言い回し）" },
+          "priority": { "type": "integer", "description": "1が最優先" },
+          "source_issue": { "type": "string", "description": "由来する assessment_summary.issues の記述" },
+          "strengths_to_use": { "type": "array", "items": { "type": "string" }, "description": "活かせる強み" },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "description": "アセスメント上の根拠（章キー＋抜粋）。空にしてはならない。",
+            "items": {
+              "type": "object",
+              "required": ["ref", "quote"],
+              "properties": {
+                "ref": { "type": "string", "description": "assessment内のパス（例: skin.notes, adl.移乗）" },
+                "quote": { "type": "string", "description": "根拠となる原文抜粋" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "verdict": "pass",
+  "findings": [
+    {
+      "cell": "table2[1].service_content",
+      "issue": "「水分摂取の声かけ」はアセスメントに脱水・水分不足の記載がなく、根拠が薄い。残すなら日々記録での裏づけが必要。",
+      "severity": "low",
+      "evidence_ref": null
+    },
+    {
+      "cell": "table2[2].service_kind",
+      "issue": "通所介護（週1回）はアセスメントの現利用サービスに未記載。新規導入の妥当性と事業所をサービス担当者会議で確認のこと。",
+      "severity": "medium",
+      "evidence_ref": null
+    },
+    {
+      "cell": "table1.living_support_reason",
+      "issue": "生活援助中心型の算定理由が空欄。日中独居だが同居家族がおり、算定要件の該当可否を要確認。",
+      "severity": "medium",
+      "evidence_ref": "basic.household"
+    }
+  ],
+  "unfilled": [
+    "table1.living_support_reason",
+    "table2[*].provider"
+  ]
+}

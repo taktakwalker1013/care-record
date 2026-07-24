@@ -1,0 +1,78 @@
+{
+  "plan_type": {
+    "code": "generic",
+    "rationale": "在宅（自宅）・要介護2・日中独居。施設併用や重度訪問介護併用に該当しないため generic。",
+    "confidence": "high"
+  },
+  "needs": [
+    {
+      "id": "N1",
+      "statement": "下肢筋力を保ち、転倒せずに自宅内を安全に移動して自立生活を続けたい",
+      "priority": 1,
+      "source_issue": "下肢筋力低下による転倒リスク",
+      "strengths_to_use": [
+        "本人に在宅生活継続への明確な意欲がある"
+      ],
+      "evidence": [
+        {
+          "ref": "adl.屋内歩行",
+          "quote": "一部介助（伝い歩き）"
+        },
+        {
+          "ref": "adl.立ち上がり",
+          "quote": "一部介助"
+        },
+        {
+          "ref": "assessment_summary.issues",
+          "quote": "下肢筋力低下による転倒リスク"
+        },
+        {
+          "ref": "health.diagnoses",
+          "quote": "変形性膝関節症（令和5年）"
+        }
+      ]
+    },
+    {
+      "id": "N2",
+      "statement": "日中独居でも食事と服薬を規則正しく行い、体調を安定させたい",
+      "priority": 2,
+      "source_issue": "日中独居による食事・服薬の不規則",
+      "strengths_to_use": [
+        "食事は自立しており経口摂取が保たれている"
+      ],
+      "evidence": [
+        {
+          "ref": "iadl.服薬管理",
+          "quote": "一部介助（飲み忘れあり）"
+        },
+        {
+          "ref": "daily_rhythm",
+          "quote": "12:00 昼食（不規則になりがち）"
+        },
+        {
+          "ref": "basic.household",
+          "quote": "日中独居（同居の長男は日中就労）"
+        }
+      ]
+    },
+    {
+      "id": "N3",
+      "statement": "外出の機会を持ち、閉じこもらずに人との関わりを保ちたい",
+      "priority": 3,
+      "source_issue": "外出機会の減少による閉じこもり傾向",
+      "strengths_to_use": [
+        "同居の長男に支援参加の意思がある"
+      ],
+      "evidence": [
+        {
+          "ref": "assessment_summary.issues",
+          "quote": "外出機会の減少による閉じこもり傾向"
+        },
+        {
+          "ref": "voice.family",
+          "quote": "転倒や閉じこもりが心配。安全に過ごしてほしい。"
+        }
+      ]
+    }
+  ]
+}

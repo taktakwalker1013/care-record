@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "careplan-draft.schema.json",
+  "title": "ケアプラン原案（第1表〜第3表）中間表現",
+  "description": "原案作成エージェントの出力。ケアプラン原案_作成支援キットの第1表・第2表・第3表の枠に対応。字数調整エージェントは cell_limits に従いこの文言を各セル上限内に収める。転記スキルはこの構造を無損失に帳票へ流し込む。",
+  "type": "object",
+  "required": ["table1", "table2"],
+  "additionalProperties": false,
+  "properties": {
+    "table1": {
+      "type": "object",
+      "description": "第1表：計画全体の土台",
+      "required": ["intent_self", "intent_family", "policy"],
+      "properties": {
+        "intent_self": { "type": "string", "description": "利用者の生活に対する意向（本人）" },
+        "intent_family": { "type": "string", "description": "家族の生活に対する意向" },
+        "policy": { "type": "string", "description": "総合的な援助の方針" },
+        "living_support_reason": { "type": "string", "description": "生活援助中心型の算定理由（該当時）" }
+      }
+    },
+    "table2": {
+      "type": "array",
+      "description": "第2表：ニーズ→目標→サービスの対応",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["need", "long_goal", "short_goal", "service_content", "service_kind"],
+        "additionalProperties": false,
+        "properties": {
+          "need_id": { "type": "string", "description": "needs.json のニーズID（トレーサビリティ）" },
+          "need": { "type": "string", "description": "生活全般の解決すべき課題（ニーズ）" },
+          "long_goal": { "type": "string", "description": "長期目標" },
+          "short_goal": { "type": "string", "description": "短期目標" },
+          "period_long": { "type": "string", "description": "長期目標の期間（例: 6か月）" },
+          "period_short": { "type": "string", "description": "短期目標の期間（例: 3か月）" },
+          "service_content": { "type": "string", "description": "サービス内容" },
+          "service_kind": { "type": "string", "description": "サービス種別" },
+          "frequency": { "type": "string", "description": "頻度" },
+          "provider": { "type": "string" }
+        }
+      }
+    },
+    "table3": {
+      "type": "object",
+      "description": "第3表：週間サービス計画表（任意）。曜日×時間帯のグリッド。",
+      "properties": {
+        "slots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "band": { "type": "string", "enum": ["午前", "午後", "夜間", "深夜"] },
+              "mon": { "type": "string" }, "tue": { "type": "string" }, "wed": { "type": "string" },
+              "thu": { "type": "string" }, "fri": { "type": "string" }, "sat": { "type": "string" }, "sun": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
