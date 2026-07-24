@@ -14,7 +14,8 @@
 //   - （拡張）llmAgent:  エージェントのプロンプト+スキーマでLLMを呼ぶ実運用用
 //
 // 使い方:
-//   node orchestrator.mjs --in a.md,b.md --captured fixtures/captured --out fixtures/out
+//   node orchestrator.mjs --in a.md,b.md --captured fixtures/captured --out fixtures/out   # 再生（オフライン）
+//   ANTHROPIC_API_KEY=sk-ant-... node orchestrator.mjs --llm --in a.md,b.md --out fixtures/out  # 実LLM
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -22,6 +23,7 @@ import { dirname, join } from "node:path";
 import { parseAssessment } from "./skills/parse_assessment.mjs";
 import { checkChars } from "./skills/count_chars.mjs";
 import { transcribe } from "./skills/transcribe.mjs";
+import { llmAgent } from "./skills/llm_agent.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const LIMITS = JSON.parse(readFileSync(join(HERE, "schemas", "cell_limits.json"), "utf8"));
@@ -94,15 +96,19 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       return acc;
     }, [])
   );
+  const useLlm = process.argv.includes("--llm");
   const inFiles = (args.in || "").split(",").filter(Boolean);
   const capturedDir = args.captured;
   const outDir = args.out || join(HERE, "fixtures", "out");
-  if (!inFiles.length || !capturedDir) {
-    console.error("usage: node orchestrator.mjs --in a.md,b.md --captured <dir> --out <dir>");
+  if (!inFiles.length || (!useLlm && !capturedDir)) {
+    console.error("usage:\n  node orchestrator.mjs --in a.md,b.md --captured <dir> --out <dir>   # 再生\n  ANTHROPIC_API_KEY=... node orchestrator.mjs --llm --in a.md,b.md --out <dir>   # 実LLM");
     process.exit(1);
   }
   const sources = inFiles.map((f) => ({ name: f.split("/").pop(), content: readFileSync(f, "utf8") }));
-  const res = await orchestrate({ sources, agent: replayAgent(capturedDir), outDir, log: (m) => console.error(m) });
+  const runner = useLlm
+    ? llmAgent({ model: args.model || "claude-opus-4-8", log: (m) => console.error(m) })
+    : replayAgent(capturedDir);
+  const res = await orchestrate({ sources, agent: runner, outDir, log: (m) => console.error(m) });
   console.error(`\n完了 → ${outDir}`);
   console.error(`  型: ${res.plan_type.plan_type?.code} / ニーズ: ${res.needs.needs.length}件 / 文字数OK: ${res.chars_ok} / 検証: ${res.verify.verdict}`);
 }

@@ -44,6 +44,7 @@ careplan/
   skills/        決定論スキル（読取・文字数カウント・転記）＋ 共通mdパーサ
   agents/        判断工程のエージェント契約（プロンプト＋入出力スキーマ）
   orchestrator.mjs  縦串を束ねる実行スクリプト（エージェント実行器は差し替え可能）
+  skills/llm_agent.mjs  実LLM実行器（Claude Messages API・emitツールで構造化出力）
   fixtures/      架空事例と生成デモ出力（fixtures/out）
 ```
 
@@ -57,8 +58,22 @@ node careplan/orchestrator.mjs \
 ```
 
 `fixtures/captured/` は各エージェント段の出力を捕捉したもの（オフライン再現用）。
-実運用では `orchestrator.mjs` の `replayAgent` を、エージェントのプロンプト＋スキーマで
-LLMを呼ぶ実行器に差し替えます。
+
+## 実行（実LLM接続）
+
+`--llm` で `replayAgent` を実LLM実行器（`skills/llm_agent.mjs`）に差し替えます。
+各エージェント段は「システム＝`agents/<name>.md` の契約」「ユーザー＝入力JSON」で Claude を呼び、
+`emit` ツール（`tool_choice` で強制）＋各段の出力スキーマで構造化出力を受け取ります。
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...   # または OAuth の場合 ANTHROPIC_AUTH_TOKEN
+node careplan/orchestrator.mjs --llm \
+  --in 01_basic_info.md,03_assessment.md \
+  --out out --model claude-opus-4-8
+```
+
+読取・字数カウント・転記は決定論のまま（コード）。判断5段のみ LLM が担います。
+キー未設定時は決定論の読取まで実行し、最初のエージェント段で明示エラーを出して停止します。
 
 各スキルは単体でも動きます:
 
@@ -79,7 +94,7 @@ node careplan/skills/transcribe.mjs draft.json           # 超過セルがあれ
 
 ## 未実装・今後
 
-- エージェント実行器のLLM接続（現状は捕捉出力のリプレイ）。
+- 型テンプレート（type1A/1B/2A の制度知識）をLLM呼び出しに同梱（現状はassessmentのみ渡す）。
 - 第3表（週間サービス計画表）の自動展開。
 - 第2表の「※1保険給付の区分（〇）」列の反映。
 - 個人情報の取り扱い経路（匿名化・権限）の設計。
