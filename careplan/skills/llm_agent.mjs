@@ -13,13 +13,14 @@
 // 使い方（orchestrator 経由）:
 //   ANTHROPIC_API_KEY=sk-ant-... node careplan/orchestrator.mjs --llm --in a.md,b.md --out out
 
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SCHEMAS = join(HERE, "..", "schemas");
 const AGENTS = join(HERE, "..", "agents");
+const KNOWLEDGE = join(HERE, "..", "knowledge");
 
 const API_URL = (process.env.ANTHROPIC_BASE_URL || "https://api.anthropic.com").replace(/\/$/, "") + "/v1/messages";
 
@@ -78,6 +79,45 @@ export function outputSchemaFor(name, schemasDir = SCHEMAS) {
   }
 }
 
+// 型テンプレート（制度知識）を段に応じて選び、システムに同梱する参照ナレッジを返す。
+//   01_classify_type : 3型のタイトル＋「適用対象」節（型を選ぶ判断材料）
+//   02 / 03          : 選ばれた型（plan_type.code）の全文
+//   04 / 05          : なし
+export function knowledgeFor(name, input, knowledgeDir = KNOWLEDGE) {
+  const load = (code) => {
+    const p = join(knowledgeDir, `${code}.md`);
+    return existsSync(p) ? readFileSync(p, "utf8") : "";
+  };
+  // 「## 1. 適用対象」節を見出しから次の「## 」まで抜く
+  const applicableSection = (md) => {
+    const lines = md.split("\n");
+    const start = lines.findIndex((l) => /^##\s*1\.\s*適用対象/.test(l));
+    if (start < 0) return "";
+    let end = lines.length;
+    for (let i = start + 1; i < lines.length; i++) {
+      if (/^##\s/.test(lines[i])) { end = i; break; }
+    }
+    return lines.slice(start, end).join("\n").trim();
+  };
+
+  if (name === "01_classify_type") {
+    return ["type1A", "type1B", "type2A"]
+      .map((code) => {
+        const md = load(code);
+        if (!md) return "";
+        const title = md.split("\n").slice(0, 2).join("\n").replace(/^#+\s*/gm, "");
+        return `### ${code}\n${title}\n\n${applicableSection(md)}`;
+      })
+      .filter(Boolean)
+      .join("\n\n---\n\n");
+  }
+  if (name === "02_extract_needs" || name === "03_draft_plan") {
+    const code = input && input.plan_type && input.plan_type.code;
+    if (code && code !== "generic") return load(code);
+  }
+  return "";
+}
+
 function authHeaders() {
   const key = process.env.ANTHROPIC_API_KEY;
   if (key) return { "x-api-key": key };
@@ -91,8 +131,12 @@ function authHeaders() {
 }
 
 // リクエストボディを組み立てる（送信はしない）。テスト・ドライラン用に公開。
-export function buildRequest(name, input, { agentsDir = AGENTS, schemasDir = SCHEMAS, model = "claude-opus-4-8", maxTokens = 8000 } = {}) {
-  const system = readFileSync(join(agentsDir, `${name}.md`), "utf8");
+export function buildRequest(name, input, { agentsDir = AGENTS, schemasDir = SCHEMAS, knowledgeDir = KNOWLEDGE, model = "claude-opus-4-8", maxTokens = 8000 } = {}) {
+  let system = readFileSync(join(agentsDir, `${name}.md`), "utf8");
+  const knowledge = knowledgeFor(name, input, knowledgeDir);
+  if (knowledge) {
+    system += "\n\n---\n\n# 参照ナレッジ（型テンプレート・制度知識）\n\nこの利用者に適用する型の知識です。サービス組合せ・役割分担・記載例・注意点はこれに整合させてください。\n\n" + knowledge;
+  }
   const schema = outputSchemaFor(name, schemasDir);
   const userText =
     "次の入力を読み、システムプロンプトの契約に従って結果を emit ツールで返してください。" +
