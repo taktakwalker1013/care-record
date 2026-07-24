@@ -29,17 +29,18 @@ export function transcribe(draft) {
   L.push("| 項目 | 記入内容 |");
   L.push("| :-- | :-- |");
   L.push(`| 利用者・家族の生活に対する意向 | 本人：${cell(t1.intent_self)}　家族：${cell(t1.intent_family)} |`);
+  if (t1.needs_analysis) L.push(`| 課題分析の結果 | ${cell(t1.needs_analysis)} |`);
   L.push(`| 総合的な援助の方針 | ${cell(t1.policy)} |`);
   if (t1.living_support_reason) L.push(`| 生活援助中心型の算定理由 | ${cell(t1.living_support_reason)} |`);
   L.push("");
 
   L.push("## 第2表\n");
-  L.push("| 生活全般の解決すべき課題（ニーズ） | 長期目標 | 短期目標 | 期間（長期/短期） | サービス内容 | サービス種別／頻度 |");
-  L.push("| :-- | :-- | :-- | :-- | :-- | :-- |");
+  L.push("| 生活全般の解決すべき課題（ニーズ） | 長期目標（期間） | 短期目標（期間） | サービス内容 | サービス種別 | 事業所名 | 頻度 |");
+  L.push("| :-- | :-- | :-- | :-- | :-- | :-- | :-- |");
   for (const r of t2) {
-    const period = [r.period_long, r.period_short].filter(Boolean).join(" / ") || "";
-    const kind = [r.service_kind, r.frequency].filter(Boolean).join(" ");
-    L.push(`| ${cell(r.need)} | ${cell(r.long_goal)} | ${cell(r.short_goal)} | ${cell(period)} | ${cell(r.service_content)} | ${cell(kind)} |`);
+    const longg = r.period_long ? `${cell(r.long_goal)}（${cell(r.period_long)}）` : cell(r.long_goal);
+    const shortg = r.period_short ? `${cell(r.short_goal)}（${cell(r.period_short)}）` : cell(r.short_goal);
+    L.push(`| ${cell(r.need)} | ${longg} | ${shortg} | ${cell(r.service_content)} | ${cell(r.service_kind)} | ${cell(r.provider)} | ${cell(r.frequency)} |`);
   }
   L.push("");
 

@@ -1,17 +1,39 @@
 {
-  "_comment": "帳票セルごとの推奨文字数上限。字数調整エージェントの合否判定と転記時の検査に使う。実際の帳票様式に合わせて調整すること（ここは一般的な目安値）。",
+  "_comment": "帳票セルごとの文字数上限。記入済みの実計画書2名分（居宅サービス計画書(1)(2)）の各セル実測値をもとに較正。値は『実測最大＋余裕』で、この範囲なら実帳票の枠に収まることを確認済み。様式や事業所運用で枠が変わる場合はここを調整する。",
+  "_calibration": {
+    "source": "記入済みの実計画書2名分の各セル実測（令和8年・氏名は非記載）",
+    "measured_max": {
+      "table1.intent_self": 121,
+      "table1.intent_family": 83,
+      "table1.needs_analysis": 283,
+      "table1.policy": 393,
+      "table2.need": 31,
+      "table2.long_goal": 28,
+      "table2.short_goal": 46,
+      "table2.service_content": 47,
+      "table2.service_kind": 8,
+      "table2.provider": 14,
+      "table2.frequency": 7,
+      "table2.period_long": 15,
+      "table2.period_short": 15
+    }
+  },
   "table1": {
-    "intent_self": 180,
-    "intent_family": 180,
-    "policy": 240,
+    "intent_self": 140,
+    "intent_family": 120,
+    "needs_analysis": 320,
+    "policy": 450,
     "living_support_reason": 60
   },
   "table2": {
-    "need": 60,
-    "long_goal": 60,
+    "need": 50,
+    "long_goal": 50,
     "short_goal": 60,
     "service_content": 60,
-    "service_kind": 40,
-    "frequency": 24
+    "service_kind": 30,
+    "provider": 30,
+    "frequency": 24,
+    "period_long": 20,
+    "period_short": 20
   }
 }

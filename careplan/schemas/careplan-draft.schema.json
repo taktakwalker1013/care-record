@@ -10,10 +10,11 @@
     "table1": {
       "type": "object",
       "description": "第1表：計画全体の土台",
-      "required": ["intent_self", "intent_family", "policy"],
+      "required": ["intent_self", "intent_family", "needs_analysis", "policy"],
       "properties": {
         "intent_self": { "type": "string", "description": "利用者の生活に対する意向（本人）" },
         "intent_family": { "type": "string", "description": "家族の生活に対する意向" },
+        "needs_analysis": { "type": "string", "description": "課題分析の結果（意向を踏まえた総括。assessment_summary.overview/issues を根拠にする）" },
         "policy": { "type": "string", "description": "総合的な援助の方針" },
         "living_support_reason": { "type": "string", "description": "生活援助中心型の算定理由（該当時）" }
       }
